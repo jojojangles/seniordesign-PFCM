@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
 namespace PFCM
 {
     public enum BONUS_TYPES : byte { ALCHEMY=0, ARMOR, BASE, CIRCUM, COMP, DEFLECT, DODGE, ENHANCE, 
