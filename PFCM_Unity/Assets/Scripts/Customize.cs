@@ -55,21 +55,24 @@ public class Customize : MonoBehaviour {
 		GameObject mesh = Instantiate(cas.characterMesh[_characterMeshIndex], transform.position, Quaternion.identity) as GameObject;
 		mesh.transform.parent = transform;
 		mesh.transform.rotation = transform.rotation;
-		pc = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
 		InstantiateChestArmor();
+		pc = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
 	}
 
 	void InstantiateChestArmor()
 	{
+		pc = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
+
 		if(_chestArmorIndex > cas.chestArmorMesh.Length - 1)
 		{
 			_chestArmorIndex = 0;
 		}
-		if(pc.chestNode.transform.childCount > 0)
+		if(pc.chestNode != null)
 		{
 			for(int i = 0; i < pc.chestNode.transform.childCount; i++)
 			{
-				Destroy(pc.chestNode.transform.GetChild(i).gameObject);
+				GameObject thing = pc.chestNode.transform.GetChild(i).gameObject;
+				Destroy(thing);
 			}
 		}
 
