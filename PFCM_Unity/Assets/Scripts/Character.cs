@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PFCM;
 
+[System.Serializable]
 public class Character {
 	private string playerName;
 	private string characterName;
