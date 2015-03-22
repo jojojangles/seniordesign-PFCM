@@ -21,12 +21,14 @@ public class Customize : MonoBehaviour {
 
 		InstantiateChestArmor();
 	}
-	
+
+	/*
 	void OnGUI()
 	{
 		ChangeCharacterMesh();
 		ChangeChestArmorMesh();
 	}
+	*/
 
 	void InstantiateCharacterMesh()
 	{

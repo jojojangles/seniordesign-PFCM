@@ -1,13 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SaveLoad.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Buttons.cs">
     <Files>
+      <File FileName="Assets\Scripts\Character.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\SaveLoad.cs" Line="23" Column="99" />
       <File FileName="Assets\Scripts\CharacterAssets.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Character.cs" Line="8" Column="28" />
       <File FileName="Assets\Scripts\Constants.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerCharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Game.cs" Line="8" Column="33" />
+      <File FileName="Assets\Scripts\PlayerCharacter.cs" Line="7" Column="1" />
+      <File FileName="Assets\Scripts\Game.cs" Line="6" Column="1" />
+      <File FileName="Assets\Scripts\Buttons.cs" Line="12" Column="18" />
+      <File FileName="Assets\Scripts\Customize.cs" Line="24" Column="2" />
+      <File FileName="Assets\Scripts\CharacterStatTracker.cs" Line="12" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
