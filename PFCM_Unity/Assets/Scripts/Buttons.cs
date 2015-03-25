@@ -5,6 +5,8 @@ using System;
 using PFCM;
 
 public class Buttons : MonoBehaviour {
+	Character c; 
+
 	//vars for classes
 	private GUIContent[] classList;
 	private bool[] cshow = {false, false, false};
@@ -24,6 +26,8 @@ public class Buttons : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Character c = GameObject.FindGameObjectWithTag("stats").GetComponent<CharacterStatTracker>().curChar;
+
 		listStyle = new GUIStyle();
 
 		CLASSES[] ctemp = (CLASSES[])Enum.GetValues(typeof(CLASSES));
@@ -53,6 +57,9 @@ public class Buttons : MonoBehaviour {
 
 	void OnGUI()
 	{
+		//just in case....
+		c = GameObject.FindGameObjectWithTag("stats").GetComponent<CharacterStatTracker>().curChar;
+
 		//buttons that I need:
 		//New Character, Load Character, Save Character
 		GUI_saveLoad();
@@ -60,8 +67,11 @@ public class Buttons : MonoBehaviour {
 		//display: Character Name, Player Name
 		GUI_names();
 
+		//race select
 		GUI_race();
+
 		//ability scores
+		GUI_ability();
 
 		//class info
 		GUI_classInfo();
@@ -87,7 +97,6 @@ public class Buttons : MonoBehaviour {
 
 	void GUI_names()
 	{
-		Character c = GameObject.FindGameObjectWithTag("stats").GetComponent<CharacterStatTracker>().curChar;
 		GUI.Label(new Rect (5, 35, 100, 25), "Character: ");
 		c.cname(GUI.TextField (new Rect(70,35,135,25), c.cname()));
 		GUI.Label(new Rect (210, 35, 100, 25), "Player: " );
@@ -102,6 +111,38 @@ public class Buttons : MonoBehaviour {
 			rpicked = true;
 			rselection = raceList[rentry];
 		}
+	}
+
+	void GUI_ability()
+	{
+		GUI.Label(new Rect(25,65,100,25), "Ability Scores");
+		GUI.Label(new Rect(150,65,100,25), "Points Spent: " + c.absPoints());
+
+		//LEFT: STR, AGI, CON
+		GUI.Label(new Rect(25,85,50,25), "STR: ");
+		int str = Int32.Parse(GUI.TextField(new Rect(60,85,25,25), c.abilityBase(ABILITY_SCORES.STR).ToString()));
+		c.abilityBase(ABILITY_SCORES.STR,str);
+
+		GUI.Label(new Rect(25,110,50,25), "DEX: ");
+		int dex = Int32.Parse(GUI.TextField(new Rect(60,110,25,25), c.abilityBase(ABILITY_SCORES.DEX).ToString()));
+		c.abilityBase(ABILITY_SCORES.DEX,dex);
+
+		GUI.Label(new Rect(25,135,50,25), "CON: ");
+		int con = Int32.Parse(GUI.TextField(new Rect(60,135,25,25), c.abilityBase(ABILITY_SCORES.CON).ToString()));
+		c.abilityBase(ABILITY_SCORES.CON,con);
+
+		//RIGHT: INT, WIS, CHA
+		GUI.Label(new Rect(200,85,50,25), "INT");
+		int gint = Int32.Parse(GUI.TextField(new Rect(235,85,25,25), c.abilityBase(ABILITY_SCORES.INT).ToString()));
+		c.abilityBase(ABILITY_SCORES.INT,gint);
+
+		GUI.Label(new Rect(200,110,50,25), "WIS");
+		int wis = Int32.Parse(GUI.TextField(new Rect(235,110,25,25), c.abilityBase(ABILITY_SCORES.WIS).ToString()));
+		c.abilityBase(ABILITY_SCORES.WIS,wis);
+
+		GUI.Label(new Rect(200,135,50,25), "CHA");
+		int cha = Int32.Parse(GUI.TextField(new Rect(235,135,25,25), c.abilityBase(ABILITY_SCORES.CHA).ToString()));
+		c.abilityBase(ABILITY_SCORES.CHA,cha);
 	}
 
 	void GUI_classInfo()

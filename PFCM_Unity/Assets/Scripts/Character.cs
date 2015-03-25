@@ -70,4 +70,53 @@ public class Character {
 		if(s > skill_BONUS[bns][skl]) {skill_BONUS[bns][skl] = s;}
 	}
 	public int skillBonus (BONUS_TYPES bns, SKILLS skl) {return skill_BONUS[bns][skl];}
+
+	public int absPoints()
+	{
+		int p = 0;
+		foreach(ABILITY_SCORES a in ABILITY_SCORES.GetValues(typeof(ABILITY_SCORES)))
+		{
+			switch(abilityBase(a))
+			{
+			case 7:
+				p += -4;
+				break;
+			case 8:
+				p += -2;
+				break;
+			case 9:
+				p += -1;
+				break;
+			case 10:
+				break;
+			case 11:
+				p += 1;
+				break;
+			case 12:
+				p += 2;
+				break;
+			case 13:
+				p += 3;
+				break;
+			case 14:
+				p += 5;
+				break;
+			case 15:
+				p += 7;
+				break;
+			case 16:
+				p += 10;
+				break;
+			case 17:
+				p += 13;
+				break;
+			case 18:
+				p += 17;
+				break;
+			default:
+				break;
+			}
+		}
+		return p;
+	}
 }
