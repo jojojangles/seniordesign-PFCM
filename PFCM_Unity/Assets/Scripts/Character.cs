@@ -14,6 +14,7 @@ public class Character {
 	private Dictionary<SKILLS,int> skill_BASE;
 	private Dictionary<BONUS_TYPES, Dictionary<ABILITY_SCORES,int>> ability_BONUS;
 	private Dictionary<BONUS_TYPES, Dictionary<SKILLS,int>> skill_BONUS;
+	private ABILITY_SCORES hfave;
 
 	public Character()
 	{		
@@ -26,6 +27,7 @@ public class Character {
 		skill_BASE = new Dictionary<SKILLS, int>();
 		ability_BONUS = new Dictionary<BONUS_TYPES, Dictionary<ABILITY_SCORES, int>>();
 		skill_BONUS = new Dictionary<BONUS_TYPES, Dictionary<SKILLS, int>>();
+		hfave = ABILITY_SCORES.STR;
 
 		foreach(ABILITY_SCORES abs in ABILITY_SCORES.GetValues(typeof(ABILITY_SCORES)))
 		{
@@ -119,4 +121,107 @@ public class Character {
 		}
 		return p;
 	}
+
+	public Dictionary<ABILITY_SCORES,int> racialAbs()
+	{
+		Dictionary<ABILITY_SCORES,int> d;
+		switch(race)
+		{
+		case RACES.DWARF:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, 0},
+				{ABILITY_SCORES.DEX, 0},
+				{ABILITY_SCORES.CON, 2},
+				{ABILITY_SCORES.INT, 0},
+				{ABILITY_SCORES.WIS, 2},
+				{ABILITY_SCORES.CHA, -2}
+			};
+			break;
+		case RACES.ELF:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, 0},
+				{ABILITY_SCORES.DEX, 2},
+				{ABILITY_SCORES.CON, -2},
+				{ABILITY_SCORES.INT, 2},
+				{ABILITY_SCORES.WIS, 0},
+				{ABILITY_SCORES.CHA, 0}
+			};
+			break;
+		case RACES.GNOME:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, -2},
+				{ABILITY_SCORES.DEX, 0},
+				{ABILITY_SCORES.CON, 2},
+				{ABILITY_SCORES.INT, 0},
+				{ABILITY_SCORES.WIS, 0},
+				{ABILITY_SCORES.CHA, 2}
+			};
+			break;
+		case RACES.HALF_ELF:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, 0},
+				{ABILITY_SCORES.DEX, 0},
+				{ABILITY_SCORES.CON, 0},
+				{ABILITY_SCORES.INT, 0},
+				{ABILITY_SCORES.WIS, 0},
+				{ABILITY_SCORES.CHA, 0}
+			};
+			d[hfave] = 2;
+			break;
+		case RACES.HALF_ORC:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, 0},
+				{ABILITY_SCORES.DEX, 0},
+				{ABILITY_SCORES.CON, 0},
+				{ABILITY_SCORES.INT, 0},
+				{ABILITY_SCORES.WIS, 0},
+				{ABILITY_SCORES.CHA, 0}
+			};
+			d[hfave] = 2;
+			break;
+		case RACES.HALFLING:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, -2},
+				{ABILITY_SCORES.DEX, 2},
+				{ABILITY_SCORES.CON, 0},
+				{ABILITY_SCORES.INT, 0},
+				{ABILITY_SCORES.WIS, 0},
+				{ABILITY_SCORES.CHA, 2}
+			};
+			break;
+		case RACES.HUMAN:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, 0},
+				{ABILITY_SCORES.DEX, 0},
+				{ABILITY_SCORES.CON, 0},
+				{ABILITY_SCORES.INT, 0},
+				{ABILITY_SCORES.WIS, 0},
+				{ABILITY_SCORES.CHA, 0}
+			};
+			d[hfave] = 2;
+			break;
+		default:
+			d = new Dictionary<ABILITY_SCORES,int>()
+			{
+				{ABILITY_SCORES.STR, 0},
+				{ABILITY_SCORES.DEX, 0},
+				{ABILITY_SCORES.CON, 0},
+				{ABILITY_SCORES.INT, 0},
+				{ABILITY_SCORES.WIS, 0},
+				{ABILITY_SCORES.CHA, 0}
+			};
+			break;
+		}
+		return d;
+	}
+
+	public void absFave(ABILITY_SCORES a) {hfave = a;}
+	public ABILITY_SCORES absFave() {return hfave;}
 }
