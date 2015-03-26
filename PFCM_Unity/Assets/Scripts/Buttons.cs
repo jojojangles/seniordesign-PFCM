@@ -30,6 +30,7 @@ public class Buttons : MonoBehaviour {
 	private int aentry = 0;
 	private GUIContent aselection;
 
+	//styles for popups and fonts
 	private GUIStyle listStyle;
 	private GUIStyle bluehl;
 	private GUIStyle yellhl;
@@ -134,6 +135,7 @@ public class Buttons : MonoBehaviour {
 		{
 			rpicked = true;
 			rselection = raceList[rentry];
+			c.charRace((RACES)Enum.Parse(typeof(RACES),rselection.text));
 		}
 		GUI.Label(new Rect(550,35,100,25), "Favored: ");
 		if (Popup.List(new Rect (610, 35, 40, 25),ref ashow,ref aentry,aselection,absList,listStyle)) //class 2
@@ -154,33 +156,33 @@ public class Buttons : MonoBehaviour {
 		GUI.Label(new Rect(25,85,50,25), "STR: ");
 		int str = Int32.Parse(GUI.TextField(new Rect(60,85,25,25), c.abilityBase(ABILITY_SCORES.STR).ToString()));
 		c.abilityBase(ABILITY_SCORES.STR,str);
-		GUI.Label(new Rect(85,85,50,25), " + " + raceBonus[ABILITY_SCORES.STR]);
+		GUI.Label(new Rect(85,90,50,25), " + " + raceBonus[ABILITY_SCORES.STR], bluehl);
 
 		GUI.Label(new Rect(25,110,50,25), "DEX: ");
 		int dex = Int32.Parse(GUI.TextField(new Rect(60,110,25,25), c.abilityBase(ABILITY_SCORES.DEX).ToString()));
 		c.abilityBase(ABILITY_SCORES.DEX,dex);
-		GUI.Label(new Rect(85,110,50,25), " + " + raceBonus[ABILITY_SCORES.DEX]);
+		GUI.Label(new Rect(85,115,50,25), " + " + raceBonus[ABILITY_SCORES.DEX], bluehl);
 
 		GUI.Label(new Rect(25,135,50,25), "CON: ");
 		int con = Int32.Parse(GUI.TextField(new Rect(60,135,25,25), c.abilityBase(ABILITY_SCORES.CON).ToString()));
 		c.abilityBase(ABILITY_SCORES.CON,con);
-		GUI.Label(new Rect(85,135,50,25), " + " + raceBonus[ABILITY_SCORES.CON]);
+		GUI.Label(new Rect(85,140,50,25), " + " + raceBonus[ABILITY_SCORES.CON], bluehl);
 
 		//RIGHT: INT, WIS, CHA
 		GUI.Label(new Rect(200,85,50,25), "INT");
 		int gint = Int32.Parse(GUI.TextField(new Rect(235,85,25,25), c.abilityBase(ABILITY_SCORES.INT).ToString()));
 		c.abilityBase(ABILITY_SCORES.INT,gint);
-		GUI.Label(new Rect(260,85,50,25), " + " + raceBonus[ABILITY_SCORES.INT]);
+		GUI.Label(new Rect(260,90,50,25), " + " + raceBonus[ABILITY_SCORES.INT], bluehl);
 
 		GUI.Label(new Rect(200,110,50,25), "WIS");
 		int wis = Int32.Parse(GUI.TextField(new Rect(235,110,25,25), c.abilityBase(ABILITY_SCORES.WIS).ToString()));
 		c.abilityBase(ABILITY_SCORES.WIS,wis);
-		GUI.Label(new Rect(260,110,50,25), " + " + raceBonus[ABILITY_SCORES.WIS]);
+		GUI.Label(new Rect(260,115,50,25), " + " + raceBonus[ABILITY_SCORES.WIS], bluehl);
 
 		GUI.Label(new Rect(200,135,50,25), "CHA");
 		int cha = Int32.Parse(GUI.TextField(new Rect(235,135,25,25), c.abilityBase(ABILITY_SCORES.CHA).ToString()));
 		c.abilityBase(ABILITY_SCORES.CHA,cha);
-		GUI.Label(new Rect(260,135,50,25), " + " + raceBonus[ABILITY_SCORES.CHA]);
+		GUI.Label(new Rect(260,140,50,25), " + " + raceBonus[ABILITY_SCORES.CHA], bluehl);
 	}
 
 	void GUI_classInfo()
@@ -190,6 +192,7 @@ public class Buttons : MonoBehaviour {
 		{
 			cpicked[0] = true;
 			cselection[0] = classList[centry[0]];
+			c.charClass(0,(CLASSES)Enum.Parse(typeof(CLASSES),cselection[0].text));
 		}
 		clevels[0] = Int32.Parse(GUI.TextField(new Rect(175,165,25,25), clevels[0].ToString()));
 		
@@ -197,6 +200,7 @@ public class Buttons : MonoBehaviour {
 		{
 			cpicked[1] = true;
 			cselection[1] = classList[centry[1]];
+			c.charClass(1,(CLASSES)Enum.Parse(typeof(CLASSES),cselection[1].text));
 		}
 		clevels[1] = Int32.Parse(GUI.TextField(new Rect(310,165,25,25), clevels[1].ToString()));
 		
@@ -204,7 +208,13 @@ public class Buttons : MonoBehaviour {
 		{
 			cpicked[2] = true;
 			cselection[2] = classList[centry[2]];
+			c.charClass(2,(CLASSES)Enum.Parse(typeof(CLASSES),cselection[2].text));
 		}
 		clevels[2] = Int32.Parse(GUI.TextField(new Rect(445,165,25,25), clevels[2].ToString()));
+
+		GUI.Label(new Rect(5,190,50,25),"BAB:");
+		GUI.Label(new Rect(5,215,50,25),"Fort:");
+		GUI.Label(new Rect(5,240,50,25),"Refl:");
+		GUI.Label(new Rect(5,265,50,25),"Will:");
 	}
 }

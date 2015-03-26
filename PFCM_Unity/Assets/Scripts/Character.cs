@@ -9,7 +9,8 @@ public class Character {
 	private string characterName;
 	private ALIGNMENT align;
 	private RACES race;
-	private Dictionary<CLASSES, int> classLevels;
+	private CLASSES[] classes;
+	private int[] levels;
 	private Dictionary<ABILITY_SCORES,int> ability_BASE;
 	private Dictionary<SKILLS,int> skill_BASE;
 	private Dictionary<BONUS_TYPES, Dictionary<ABILITY_SCORES,int>> ability_BONUS;
@@ -22,7 +23,8 @@ public class Character {
 		characterName = "New Character";
 		align = ALIGNMENT.NEUTRAL_NEUTRAL;
 		race = RACES.HUMAN;
-		classLevels = new Dictionary<CLASSES,int>();
+		classes = new CLASSES[3];
+		levels = new int[]{0,0,0};
 		ability_BASE = new Dictionary<ABILITY_SCORES, int>();
 		skill_BASE = new Dictionary<SKILLS, int>();
 		ability_BONUS = new Dictionary<BONUS_TYPES, Dictionary<ABILITY_SCORES, int>>();
@@ -52,8 +54,10 @@ public class Character {
 	public void charRace(RACES r) {race = r;}
 	public RACES charRace() {return race;}
 
-	public void classLevel(CLASSES c, int level) {classLevels[c] = level;}
-	public int classLevel(CLASSES c) {return classLevels[c];}
+	public CLASSES charClass(int c) {return classes[c];}
+	public void charClass(int c, CLASSES cl) {classes[c] = cl;}
+	public int classLevel(int c) {return levels[c];}
+	public void classLevel(int c, int l) {levels[c] = l;}
 
 	public void abilityBase (ABILITY_SCORES abs, int a) {ability_BASE[abs] = a;}
 	public int abilityBase (ABILITY_SCORES abs) {return ability_BASE[abs];}
@@ -128,95 +132,79 @@ public class Character {
 		switch(race)
 		{
 		case RACES.DWARF:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, 0},
-				{ABILITY_SCORES.DEX, 0},
-				{ABILITY_SCORES.CON, 2},
-				{ABILITY_SCORES.INT, 0},
-				{ABILITY_SCORES.WIS, 2},
-				{ABILITY_SCORES.CHA, -2}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = 0;
+			d[ABILITY_SCORES.DEX] = 0;
+			d[ABILITY_SCORES.CON] = 2;
+			d[ABILITY_SCORES.INT] = 0;
+			d[ABILITY_SCORES.WIS] = 2;
+			d[ABILITY_SCORES.CHA] = -2;
 			break;
 		case RACES.ELF:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, 0},
-				{ABILITY_SCORES.DEX, 2},
-				{ABILITY_SCORES.CON, -2},
-				{ABILITY_SCORES.INT, 2},
-				{ABILITY_SCORES.WIS, 0},
-				{ABILITY_SCORES.CHA, 0}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = 0;
+			d[ABILITY_SCORES.DEX] = 2;
+			d[ABILITY_SCORES.CON] = -2;
+			d[ABILITY_SCORES.INT] = 2;
+			d[ABILITY_SCORES.WIS] = 0;
+			d[ABILITY_SCORES.CHA] = 0;
 			break;
 		case RACES.GNOME:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, -2},
-				{ABILITY_SCORES.DEX, 0},
-				{ABILITY_SCORES.CON, 2},
-				{ABILITY_SCORES.INT, 0},
-				{ABILITY_SCORES.WIS, 0},
-				{ABILITY_SCORES.CHA, 2}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = -2;
+			d[ABILITY_SCORES.DEX] = 0;
+			d[ABILITY_SCORES.CON] = 2;
+			d[ABILITY_SCORES.INT] = 0;
+			d[ABILITY_SCORES.WIS] = 0;
+			d[ABILITY_SCORES.CHA] = 2;
 			break;
 		case RACES.HALF_ELF:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, 0},
-				{ABILITY_SCORES.DEX, 0},
-				{ABILITY_SCORES.CON, 0},
-				{ABILITY_SCORES.INT, 0},
-				{ABILITY_SCORES.WIS, 0},
-				{ABILITY_SCORES.CHA, 0}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = 0;
+			d[ABILITY_SCORES.DEX] = 0;
+			d[ABILITY_SCORES.CON] = 0;
+			d[ABILITY_SCORES.INT] = 0;
+			d[ABILITY_SCORES.WIS] = 0;
+			d[ABILITY_SCORES.CHA] = 0;
 			d[hfave] = 2;
 			break;
 		case RACES.HALF_ORC:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, 0},
-				{ABILITY_SCORES.DEX, 0},
-				{ABILITY_SCORES.CON, 0},
-				{ABILITY_SCORES.INT, 0},
-				{ABILITY_SCORES.WIS, 0},
-				{ABILITY_SCORES.CHA, 0}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = 0;
+			d[ABILITY_SCORES.DEX] = 0;
+			d[ABILITY_SCORES.CON] = 0;
+			d[ABILITY_SCORES.INT] = 0;
+			d[ABILITY_SCORES.WIS] = 0;
+			d[ABILITY_SCORES.CHA] = 0;
 			d[hfave] = 2;
 			break;
 		case RACES.HALFLING:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, -2},
-				{ABILITY_SCORES.DEX, 2},
-				{ABILITY_SCORES.CON, 0},
-				{ABILITY_SCORES.INT, 0},
-				{ABILITY_SCORES.WIS, 0},
-				{ABILITY_SCORES.CHA, 2}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = -2;
+			d[ABILITY_SCORES.DEX] = 2;
+			d[ABILITY_SCORES.CON] = 0;
+			d[ABILITY_SCORES.INT] = 0;
+			d[ABILITY_SCORES.WIS] = 0;
+			d[ABILITY_SCORES.CHA] = 2;
 			break;
 		case RACES.HUMAN:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, 0},
-				{ABILITY_SCORES.DEX, 0},
-				{ABILITY_SCORES.CON, 0},
-				{ABILITY_SCORES.INT, 0},
-				{ABILITY_SCORES.WIS, 0},
-				{ABILITY_SCORES.CHA, 0}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = 0;
+			d[ABILITY_SCORES.DEX] = 0;
+			d[ABILITY_SCORES.CON] = 0;
+			d[ABILITY_SCORES.INT] = 0;
+			d[ABILITY_SCORES.WIS] = 0;
+			d[ABILITY_SCORES.CHA] = 0;
 			d[hfave] = 2;
 			break;
 		default:
-			d = new Dictionary<ABILITY_SCORES,int>()
-			{
-				{ABILITY_SCORES.STR, 0},
-				{ABILITY_SCORES.DEX, 0},
-				{ABILITY_SCORES.CON, 0},
-				{ABILITY_SCORES.INT, 0},
-				{ABILITY_SCORES.WIS, 0},
-				{ABILITY_SCORES.CHA, 0}
-			};
+			d = new Dictionary<ABILITY_SCORES,int>();
+			d[ABILITY_SCORES.STR] = 0;
+			d[ABILITY_SCORES.DEX] = 0;
+			d[ABILITY_SCORES.CON] = 0;
+			d[ABILITY_SCORES.INT] = 0;
+			d[ABILITY_SCORES.WIS] = 0;
+			d[ABILITY_SCORES.CHA] = 0;
 			break;
 		}
 		return d;
