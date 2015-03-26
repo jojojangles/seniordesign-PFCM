@@ -25,10 +25,10 @@ namespace PFCM
 	public enum CASTER_TYPE : byte { PREPARED_ARCANE=0, SPONTANEOUS_ARCANE, PREPARED_DIVINE,
                                         SPONTANEOUS_DIVINE, NONE};
     public enum SPELL_PER_DAY : byte { FOUR_LEVEL=0, SIX_LEVEL, NINE_LEVEL, NONE};
-    public enum CLASSES : byte { BARBARIAN, BARD, CLERIC, DRUID, FIGHTER, MONK, PALADIN, RANGER,
+    public enum CLASSES : byte { BARBARIAN, BARD, CLERIC, DRUID, FIGHTER, MONK, PALADIN, RANGER, ROGUE,
                                         SORCERER, WIZARD, ALCHEMIST, CAVALIER, GUNSLINGER, INQUISITOR,
                                         MAGUS, ORACLE, SUMMONER, WITCH, ANTIPALADIN, NINJA, SAMURAI,
                                         ARCANIST, BLOODRAGER, BRAWLER, HUNTER, INVESTIGATOR, SHAMAN,
-                                        SKALD, SLAYER, SWASHBUCKLER, WARPRIEST};
+                                        SKALD, SLAYER, SWASHBUCKLER, WARPRIEST, NONE};
 	public enum RACES : byte { HUMAN = 0, DWARF, ELF, GNOME, HALF_ELF, HALF_ORC, HALFLING, CUSTOM};
 }

@@ -1,14 +1,20 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class Game {
 
-	public static Game current;
+public class Game  : MonoBehaviour {
+
 	public static Character curChar;
-
-	public Game()
-	{
-
+	public FileBrowser fb;
+	
+	// Use this for initialization
+	void Start () {
+		curChar = null;
+		fb = new FileBrowser();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
 	}
 }

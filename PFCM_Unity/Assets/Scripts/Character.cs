@@ -5,6 +5,7 @@ using PFCM;
 
 [System.Serializable]
 public class Character {
+	//char specific
 	private string playerName;
 	private string characterName;
 	private ALIGNMENT align;
@@ -17,13 +18,17 @@ public class Character {
 	private Dictionary<BONUS_TYPES, Dictionary<SKILLS,int>> skill_BONUS;
 	private ABILITY_SCORES hfave;
 
+	//char agnostic, rules
+	private Dictionary<CLASSES,int> hitdice;
+	private Dictionary<CLASSES,int[]> saves; //0 - bad, 1 - good
+
 	public Character()
 	{		
 		playerName = "New Player";
 		characterName = "New Character";
 		align = ALIGNMENT.NEUTRAL_NEUTRAL;
 		race = RACES.HUMAN;
-		classes = new CLASSES[3];
+		classes = new CLASSES[3]{CLASSES.NONE,CLASSES.NONE,CLASSES.NONE};
 		levels = new int[]{0,0,0};
 		ability_BASE = new Dictionary<ABILITY_SCORES, int>();
 		skill_BASE = new Dictionary<SKILLS, int>();
@@ -40,6 +45,42 @@ public class Character {
 		{
 			skill_BASE.Add(s, 0);
 		}
+
+		hitdice = new Dictionary<CLASSES,int>();
+		saves = new Dictionary<CLASSES,int[]>();
+		hitdice[CLASSES.ALCHEMIST] = 8; saves[CLASSES.ALCHEMIST] = new int[]{1,1,0};
+		hitdice[CLASSES.ANTIPALADIN] = 10; saves[CLASSES.ANTIPALADIN] = new int[]{1,0,1};
+		hitdice[CLASSES.ARCANIST] = 6; saves[CLASSES.ARCANIST] = new int[]{0,0,1};
+		hitdice[CLASSES.BARBARIAN] = 12; saves[CLASSES.BARBARIAN] = new int[]{1,0,0};
+		hitdice[CLASSES.BARD] = 8; saves[CLASSES.BARD] = new int[]{0,1,1};
+		hitdice[CLASSES.BLOODRAGER] = 10; saves[CLASSES.BLOODRAGER] = new int[]{1,0,0};
+		hitdice[CLASSES.BRAWLER] = 10; saves[CLASSES.BRAWLER] = new int[]{1,1,0};
+		hitdice[CLASSES.CAVALIER] = 10; saves[CLASSES.CAVALIER] = new int[]{1,0,0};
+		hitdice[CLASSES.CLERIC] = 8; saves[CLASSES.CLERIC] = new int[]{1,0,1};
+		hitdice[CLASSES.DRUID] = 8; saves[CLASSES.DRUID] = new int[]{1,0,1};
+		hitdice[CLASSES.FIGHTER] = 10; saves[CLASSES.FIGHTER] = new int[]{1,0,0};
+		hitdice[CLASSES.GUNSLINGER] = 10; saves[CLASSES.GUNSLINGER] = new int[]{1,1,0};
+		hitdice[CLASSES.HUNTER] = 8; saves[CLASSES.HUNTER] = new int[]{1,1,0};
+		hitdice[CLASSES.INQUISITOR] = 8; saves[CLASSES.INQUISITOR] = new int[]{1,0,1};
+		hitdice[CLASSES.INVESTIGATOR] = 8; saves[CLASSES.INVESTIGATOR] = new int[]{0,1,1};
+		hitdice[CLASSES.MAGUS] = 8; saves[CLASSES.MAGUS] = new int[]{1,0,1};
+		hitdice[CLASSES.MONK] = 8; saves[CLASSES.MONK] = new int[]{1,1,1};
+		hitdice[CLASSES.NINJA] = 8; saves[CLASSES.NINJA] = new int[]{0,1,0};
+		hitdice[CLASSES.ORACLE] = 8; saves[CLASSES.ORACLE] = new int[]{0,0,1};
+		hitdice[CLASSES.PALADIN] = 10; saves[CLASSES.PALADIN] = new int[]{1,0,1};
+		hitdice[CLASSES.RANGER] = 10; saves[CLASSES.RANGER] = new int[]{1,1,0};
+		hitdice[CLASSES.ROGUE] = 8; saves[CLASSES.ROGUE] = new int[]{0,1,0};
+		hitdice[CLASSES.SAMURAI] = 10; saves[CLASSES.SAMURAI] = new int[]{1,0,0};
+		hitdice[CLASSES.SHAMAN] = 8; saves[CLASSES.SHAMAN] = new int[]{0,0,1};
+		hitdice[CLASSES.SKALD] = 8; saves[CLASSES.SKALD] = new int[]{1,0,1};
+		hitdice[CLASSES.SLAYER] = 10; saves[CLASSES.SLAYER] = new int[]{1,1,0};
+		hitdice[CLASSES.SORCERER] = 6; saves[CLASSES.SORCERER] = new int[]{0,0,1};
+		hitdice[CLASSES.SUMMONER] = 8; saves[CLASSES.SUMMONER] = new int[]{0,0,1};
+		hitdice[CLASSES.SWASHBUCKLER] = 10; saves[CLASSES.SWASHBUCKLER] = new int[]{0,1,0};
+		hitdice[CLASSES.WARPRIEST] = 8; saves[CLASSES.WARPRIEST] = new int[]{1,0,1};
+		hitdice[CLASSES.WITCH] = 6; saves[CLASSES.WITCH] = new int[]{0,0,1};
+		hitdice[CLASSES.WIZARD] = 6; saves[CLASSES.WIZARD] = new int[]{0,0,1};
+		hitdice[CLASSES.NONE] = 0; saves[CLASSES.NONE] = new int[]{0,0,0};
 	}
 
 	public void pname(string name) {playerName = name;}
@@ -212,4 +253,43 @@ public class Character {
 
 	public void absFave(ABILITY_SCORES a) {hfave = a;}
 	public ABILITY_SCORES absFave() {return hfave;}
+
+	public int BAB()
+	{
+		int BAB = 0;
+		for(int i = 0; i < classes.Length; i++)
+		{
+			
+			if(hitdice[classes[i]] == 10 || hitdice[classes[i]] == 12)
+			{
+				BAB += levels[i];
+			}
+			else if(hitdice[classes[i]] == 8)
+			{
+				BAB += (int)(levels[i]*.75);
+			}
+			else if(hitdice[classes[i]] == 6)
+			{
+				BAB += (int)(levels[i]*.5);
+			}
+			else
+			{
+				BAB += 0;
+			}
+		}
+		return BAB;
+	}
+
+	public int[] saveFRW()
+	{
+		int[] s = new int[]{0,0,0};
+		for(int i = 0; i < classes.Length; i++)
+		{
+			for(int j = 0; j < s.Length; j++)
+			{
+				if(classes[i] != CLASSES.NONE) s[j] += saves[classes[i]][j] == 1 && levels[i] > 0 ? (int)(2 + levels[i]*.5) : (int)(levels[i]*.75);
+			}
+		}
+		return s;
+	}
 }

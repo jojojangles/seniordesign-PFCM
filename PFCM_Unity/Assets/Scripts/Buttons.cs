@@ -195,6 +195,7 @@ public class Buttons : MonoBehaviour {
 			c.charClass(0,(CLASSES)Enum.Parse(typeof(CLASSES),cselection[0].text));
 		}
 		clevels[0] = Int32.Parse(GUI.TextField(new Rect(175,165,25,25), clevels[0].ToString()));
+		c.classLevel(0,clevels[0]);
 		
 		if (Popup.List(new Rect (205, 165, 100, 25),ref cshow[1],ref centry[1],cselection[1],classList,listStyle)) //class 2
 		{
@@ -203,6 +204,7 @@ public class Buttons : MonoBehaviour {
 			c.charClass(1,(CLASSES)Enum.Parse(typeof(CLASSES),cselection[1].text));
 		}
 		clevels[1] = Int32.Parse(GUI.TextField(new Rect(310,165,25,25), clevels[1].ToString()));
+		c.classLevel(1,clevels[1]);
 		
 		if (Popup.List(new Rect (340, 165, 100, 25),ref cshow[2],ref centry[2],cselection[2],classList,listStyle)) //class 3
 		{
@@ -211,10 +213,11 @@ public class Buttons : MonoBehaviour {
 			c.charClass(2,(CLASSES)Enum.Parse(typeof(CLASSES),cselection[2].text));
 		}
 		clevels[2] = Int32.Parse(GUI.TextField(new Rect(445,165,25,25), clevels[2].ToString()));
+		c.classLevel(2,clevels[2]);
 
-		GUI.Label(new Rect(5,190,50,25),"BAB:");
-		GUI.Label(new Rect(5,215,50,25),"Fort:");
-		GUI.Label(new Rect(5,240,50,25),"Refl:");
-		GUI.Label(new Rect(5,265,50,25),"Will:");
+		GUI.Label(new Rect(5,190,500,25),"BAB = " + c.BAB());
+		GUI.Label(new Rect(5,215,500,25),"Fort = " + c.saveFRW()[0]);
+		GUI.Label(new Rect(5,240,500,25),"Refl = " + c.saveFRW()[1]);
+		GUI.Label(new Rect(5,265,500,25),"Will = " + c.saveFRW()[2]);
 	}
 }
