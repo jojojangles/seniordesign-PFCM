@@ -287,9 +287,27 @@ public class Character {
 		{
 			for(int j = 0; j < s.Length; j++)
 			{
-				if(classes[i] != CLASSES.NONE) s[j] += saves[classes[i]][j] == 1 && levels[i] > 0 ? (int)(2 + levels[i]*.5) : (int)(levels[i]*.75);
+				if(classes[i] != CLASSES.NONE) s[j] += saves[classes[i]][j] == 1 && levels[i] > 0 ? (int)(2 + levels[i]/2) : (int)(levels[i]/3);
 			}
 		}
 		return s;
+	}
+
+	public int hitpoints()
+	{
+		return (int)(hitdice[classes[0]] +
+			hitdice[classes[0]]*(levels[0]-1)/2.0 +
+			hitdice[classes[1]]*levels[1]/2.0 +
+			hitdice[classes[2]]*levels[2]/2.0);
+	}
+
+	public int absMod(ABILITY_SCORES a)
+	{
+		return (int)((ability_BASE[a]+racialAbs()[a])*.5) - 5;
+	}
+
+	public int totlev()
+	{
+		return levels[0] + levels[1] + levels[2];
 	}
 }
