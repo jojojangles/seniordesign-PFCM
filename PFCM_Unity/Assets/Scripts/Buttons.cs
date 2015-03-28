@@ -33,12 +33,15 @@ public class Buttons : MonoBehaviour {
 	//styles for popups and fonts
 	private GUIStyle listStyle;
 	private GUIStyle greyhl;
-	private GUIStyle yellhl;
-	private GUIStyle redhl;
-	private GUIStyle greehl;
-	private GUIStyle cyanhl;
-	private GUIStyle pinkhl;
-	private GUIStyle oranhl;
+	private GUIStyle dexhl;
+	private GUIStyle strhl;
+	private GUIStyle conhl;
+	private GUIStyle inthl;
+	private GUIStyle wishl;
+	private GUIStyle chahl;
+
+	//skill checks
+	private int cAcro = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -47,12 +50,12 @@ public class Buttons : MonoBehaviour {
 
 		listStyle = new GUIStyle(); listStyle.normal.textColor = Color.white;
 		greyhl = new GUIStyle(); greyhl.normal.textColor = Color.grey;
-		yellhl = new GUIStyle(); yellhl.normal.textColor = Color.yellow;
-		redhl = new GUIStyle(); redhl.normal.textColor = Color.red;
-		greehl = new GUIStyle(); greehl.normal.textColor = Color.green;
-		cyanhl = new GUIStyle(); cyanhl.normal.textColor = Color.cyan;
-		pinkhl = new GUIStyle(); pinkhl.normal.textColor = Color.magenta;
-		oranhl = new GUIStyle(); oranhl.normal.textColor = new Color(1.0f,0.5f,0.0f);
+		dexhl = new GUIStyle(); dexhl.normal.textColor = Color.yellow;
+		strhl = new GUIStyle(); strhl.normal.textColor = Color.red;
+		conhl = new GUIStyle(); conhl.normal.textColor = Color.green;
+		inthl = new GUIStyle(); inthl.normal.textColor = Color.cyan;
+		wishl = new GUIStyle(); wishl.normal.textColor = Color.magenta;
+		chahl = new GUIStyle(); chahl.normal.textColor = new Color(1.0f,0.5f,0.0f);
 
 		CLASSES[] ctemp = (CLASSES[])Enum.GetValues(typeof(CLASSES));
 		classList = new GUIContent[ctemp.Length];
@@ -111,6 +114,9 @@ public class Buttons : MonoBehaviour {
 
 		//hp
 		GUI_hp();
+
+		//skills
+		GUI_skills();
 	}
 
 	void GUI_saveLoad()
@@ -162,38 +168,38 @@ public class Buttons : MonoBehaviour {
 		GUI.Label(new Rect(150,65,100,25), "Points Spent: " + c.absPoints());
 
 		//LEFT: STR, AGI, CON
-		GUI.Label(new Rect(25,85,50,25), "STR: ", redhl);
+		GUI.Label(new Rect(25,85,50,25), "STR: ", strhl);
 		int str = Int32.Parse(GUI.TextField(new Rect(60,85,25,25), c.abilityBase(ABILITY_SCORES.STR).ToString()));
 		c.abilityBase(ABILITY_SCORES.STR,str);
 		GUI.Label(new Rect(85,90,50,25), " + " + raceBonus[ABILITY_SCORES.STR], greyhl);
 		GUI.Label(new Rect(110,85,100,25), " = " + (str + raceBonus[ABILITY_SCORES.STR]) + " Mod: " + c.absMod(ABILITY_SCORES.STR));
 
-		GUI.Label(new Rect(25,110,50,25), "DEX: ", yellhl);
+		GUI.Label(new Rect(25,110,50,25), "DEX: ", dexhl);
 		int dex = Int32.Parse(GUI.TextField(new Rect(60,110,25,25), c.abilityBase(ABILITY_SCORES.DEX).ToString()));
 		c.abilityBase(ABILITY_SCORES.DEX,dex);
 		GUI.Label(new Rect(85,115,50,25), " + " + raceBonus[ABILITY_SCORES.DEX], greyhl);
 		GUI.Label(new Rect(110,110,100,25), " = " + (dex + raceBonus[ABILITY_SCORES.DEX]) + " Mod: " + c.absMod(ABILITY_SCORES.DEX));
 
-		GUI.Label(new Rect(25,135,50,25), "CON: ", greehl);
+		GUI.Label(new Rect(25,135,50,25), "CON: ", conhl);
 		int con = Int32.Parse(GUI.TextField(new Rect(60,135,25,25), c.abilityBase(ABILITY_SCORES.CON).ToString()));
 		c.abilityBase(ABILITY_SCORES.CON,con);
 		GUI.Label(new Rect(85,140,50,25), " + " + raceBonus[ABILITY_SCORES.CON], greyhl);
 		GUI.Label(new Rect(110,135,100,25), " = " + (con + raceBonus[ABILITY_SCORES.CON]) + " Mod: " + c.absMod(ABILITY_SCORES.CON));
 
 		//RIGHT: INT, WIS, CHA
-		GUI.Label(new Rect(200,85,50,25), "INT", cyanhl);
+		GUI.Label(new Rect(200,85,50,25), "INT", inthl);
 		int gint = Int32.Parse(GUI.TextField(new Rect(235,85,25,25), c.abilityBase(ABILITY_SCORES.INT).ToString()));
 		c.abilityBase(ABILITY_SCORES.INT,gint);
 		GUI.Label(new Rect(260,90,50,25), " + " + raceBonus[ABILITY_SCORES.INT], greyhl);
 		GUI.Label(new Rect(285,85,100,25), " = " + (gint + raceBonus[ABILITY_SCORES.INT]) + " Mod: " + c.absMod(ABILITY_SCORES.INT));
 
-		GUI.Label(new Rect(200,110,50,25), "WIS", pinkhl);
+		GUI.Label(new Rect(200,110,50,25), "WIS", wishl);
 		int wis = Int32.Parse(GUI.TextField(new Rect(235,110,25,25), c.abilityBase(ABILITY_SCORES.WIS).ToString()));
 		c.abilityBase(ABILITY_SCORES.WIS,wis);
 		GUI.Label(new Rect(260,115,50,25), " + " + raceBonus[ABILITY_SCORES.WIS], greyhl);
 		GUI.Label(new Rect(285,110,100,25), " = " + (wis + raceBonus[ABILITY_SCORES.WIS]) + " Mod: " + c.absMod(ABILITY_SCORES.WIS));
 
-		GUI.Label(new Rect(200,135,50,25), "CHA", oranhl);
+		GUI.Label(new Rect(200,135,50,25), "CHA", chahl);
 		int cha = Int32.Parse(GUI.TextField(new Rect(235,135,25,25), c.abilityBase(ABILITY_SCORES.CHA).ToString()));
 		c.abilityBase(ABILITY_SCORES.CHA,cha);
 		GUI.Label(new Rect(260,140,50,25), " + " + raceBonus[ABILITY_SCORES.CHA], greyhl);
@@ -240,5 +246,22 @@ public class Buttons : MonoBehaviour {
 	{
 		int hp = c.hitpoints() + c.absMod(ABILITY_SCORES.CON)*c.totlev();
 		GUI.Label(new Rect(375,90,100,25), "Hit Points = " + hp); 
+	}
+
+	void GUI_skills()
+	{
+		GUI.Label(new Rect(200,280,200,25), "Skills");
+
+		int sAcro = c.skillBase(SKILLS.ACROBATICS);
+		if(GUI.Button(new Rect(5,305,50,25), "Acrobatics: ", dexhl)) {cAcro = (d20() + sAcro + c.absMod(ABILITY_SCORES.DEX));}
+		sAcro = Int32.Parse(GUI.TextField(new Rect(75,305,25,25), sAcro.ToString ()));
+		c.skillBase(SKILLS.ACROBATICS, sAcro);
+		GUI.Label(new Rect(105,305,100,25), " + " + c.absMod(ABILITY_SCORES.DEX));
+		GUI.Label(new Rect(155,305,100,25), "chk: " + cAcro);
+	}
+
+	int d20()
+	{
+		return (int)(UnityEngine.Random.Range(1.0f,21.0f));
 	}
 }
