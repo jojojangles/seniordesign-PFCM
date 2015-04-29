@@ -36,6 +36,7 @@ public class Buttons : MonoBehaviour {
 	private bool armpicked = false;
 	private int armentry = 0;
 	private GUIContent armselection;
+	Dictionary<string,Armor> armory;
 
 	//styles for popups and fonts
 	private GUIStyle listStyle;
@@ -99,8 +100,12 @@ public class Buttons : MonoBehaviour {
 		}
 		aselection = new GUIContent("ATB");
 
-
-
+		armory = Armor.armory();
+		armList = new GUIContent[armory.Count];
+		for(int i = 0; i < armList.Length; i++)
+		{
+			armList[i] = new GUIContent(armory[armory.Keys[i]].name);
+		}
 	}
 	
 	// Update is called once per frame
@@ -426,7 +431,8 @@ public class Buttons : MonoBehaviour {
 
 	void GUI_armor()
 	{
-		if (Popup.List(new Rect (600, 600, 40, 25),ref armshow,ref armentry,armselection,armList,listStyle))
+		GUI.Label(new Rect(800,650,50,25), "Worn Equipment");
+		if (Popup.List(new Rect (725, 675, 200, 25),ref armshow,ref armentry,armselection,armList,listStyle))
 		{
 			armpicked = true;
 			armselection = armList[aentry];

@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\FileBrowser\Script\FileBrowser.cs" />
      <Compile Include="Assets\FileBrowser\Script\testFileBrowser.cs" />
-     <Compile Include="Assets\Scripts\Armor.cs" />
      <Compile Include="Assets\Scripts\Buttons.cs" />
      <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\CharacterAssets.cs" />

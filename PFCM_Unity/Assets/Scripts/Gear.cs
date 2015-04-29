@@ -20,6 +20,8 @@ public class Gear
 		_weight = weight;
 		_masterwork = masterwork;
 	}
+
+	public string name() {return _name;}
 }
 
 public class Armor : Gear
@@ -54,6 +56,15 @@ public class Armor : Gear
 		_spellfail = spellfail;
 		_speed = speed;
 
+	}
+
+	public static Dictionary<string, Armor> armory() //generates an armory of armor sets to look through
+	{
+		Armor clothing = new Armor("Clothes",0,0,false,0,10,0,0.0f,false);
+		Armor leather = new Armor("Leather",10,15,false,2,6,0,0.10f,false);
+		Armor breastplate = new Armor("Breastplate",200,30,false,6,3,4,0.25f,true);
+		Armor halfplate = new Armor("Half Plate",600,50,false,8,0,7,0.40f,true);
+		Armor fullplate = new Armor("Full Plate",1500,50,false,9,1,6,0.35f,true);
 	}
 }
 
