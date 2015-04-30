@@ -65,6 +65,13 @@ public class Armor : Gear
 		Armor breastplate = new Armor("Breastplate",200,30,false,6,3,4,0.25f,true);
 		Armor halfplate = new Armor("Half Plate",600,50,false,8,0,7,0.40f,true);
 		Armor fullplate = new Armor("Full Plate",1500,50,false,9,1,6,0.35f,true);
+		Dictionary<string, Armor> a = new Dictionary<string,Armor>();
+		a[clothing.name()] = clothing;
+		a[leather.name ()] = leather;
+		a[breastplate.name ()] = breastplate;
+		a[halfplate.name()] = halfplate;
+		a[fullplate.name ()] = fullplate;
+		return a;
 	}
 }
 

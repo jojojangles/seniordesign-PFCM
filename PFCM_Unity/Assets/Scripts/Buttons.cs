@@ -57,7 +57,7 @@ public class Buttons : MonoBehaviour {
 				sSur, sSwi, sUmd = 0;
 
 	//random bonuses that i need in lots of places
-	private int sizeMod = 0;
+	private int sizeMod, armorAC = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -101,10 +101,12 @@ public class Buttons : MonoBehaviour {
 		aselection = new GUIContent("ATB");
 
 		armory = Armor.armory();
+		string[] armkeys = new string[armory.Keys.Count];
+		armory.Keys.CopyTo(armkeys,0);
 		armList = new GUIContent[armory.Count];
 		for(int i = 0; i < armList.Length; i++)
 		{
-			armList[i] = new GUIContent(armory[armory.Keys[i]].name);
+			armList[i] = new GUIContent(armkeys[i]);
 		}
 	}
 	
@@ -134,6 +136,8 @@ public class Buttons : MonoBehaviour {
 
 		//class info
 		GUI_classInfo();
+
+		//AC, CMB, CMD
 
 		//hp
 		GUI_hp();
