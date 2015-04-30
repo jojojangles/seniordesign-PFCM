@@ -339,6 +339,7 @@ public class Character {
 	public void equip(EQUIP slot, Gear g)
 	{
 		_equipment[slot] = g;
+		acBonus[BONUS_TYPES.ARMOR] = g.bonus(BONUS_TYPES.ARMOR);
 	}
 
 	public Gear equip(EQUIP slot)

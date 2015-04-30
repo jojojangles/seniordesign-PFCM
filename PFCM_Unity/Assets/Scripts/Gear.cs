@@ -9,6 +9,7 @@ public class Gear
 	protected int _price;
 	protected int _weight;
 	protected bool _masterwork;
+	protected Dictionary<BONUS_TYPES,int> bs;
 
 	public Gear ()
 	{
@@ -16,6 +17,11 @@ public class Gear
 		_price = 0;
 		_weight = 0;
 		_masterwork = false;
+		bs = new Dictionary<BONUS_TYPES, int>();
+		foreach(BONUS_TYPES b in BONUS_TYPES.GetValues(typeof(BONUS_TYPES)))
+		{
+			bs[b] = 0;
+		}
 	}
 
 	public Gear (string name, int price, int weight, bool masterwork)
@@ -27,6 +33,7 @@ public class Gear
 	}
 
 	public string name() {return _name;}
+	public int bonus(BONUS_TYPES b) {return bs[b];}
 }
 
 public class Armor : Gear
@@ -66,6 +73,7 @@ public class Armor : Gear
 		_checkpen = checkpen;
 		_spellfail = spellfail;
 		_speed = speed;
+		bs[BONUS_TYPES.ARMOR] = ac;
 
 	}
 

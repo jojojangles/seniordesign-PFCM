@@ -52,10 +52,10 @@ public class Buttons : MonoBehaviour {
 	//skill checks
 	private int cAcr, cApp, cBlu, cCli, cDip, cDev, cDis, cEsc, cFly, 
 				cHan, cHea, cInt, cLin, cPer, cRid, cSen, cSle, cSpe, cSte,
-				cSur, cSwi, cUmd = 0;
+				cSur, cSwi, cUmd;
 	private int sAcr, sApp, sBlu, sCli, sDip, sDev, sDis, sEsc, sFly,
 				sHan, sHea, sInt, sLin, sPer, sRid, sSen, sSle, sSpe, sSte,
-				sSur, sSwi, sUmd = 0;
+				sSur, sSwi, sUmd;
 
 	//random bonuses that i need in lots of places
 	private int sizeMod, armorAC = 0;
@@ -325,7 +325,7 @@ public class Buttons : MonoBehaviour {
 		sCli = c.skillBase(SKILLS.CLIMB);
 		if(GUI.Button(new Rect(5,380,50,25), "Climb: ", strhl)) {cCli = (d20() + sCli + c.absMod(ABILITY_SCORES.STR));}
 		sCli = Int32.Parse(GUI.TextField(new Rect(120,380,25,25), sCli.ToString ()));
-		c.skillBase(SKILLS.ACROBATICS, sCli);
+		c.skillBase(SKILLS.CLIMB, sCli);
 		GUI.Label(new Rect(150,380,100,25), cCli.ToString ());
 		
 		sDip = c.skillBase(SKILLS.DIPLOMACY);
@@ -450,7 +450,10 @@ public class Buttons : MonoBehaviour {
 			c.equip(EQUIP.ARMOR, a);
 			spawn.showAvatar(c.charRace(),a);
 		}
-
+		
+		GUI.Label(new Rect(100,190,500,25),"Armor Class = " + c.ac());
+		GUI.Label(new Rect(100,215,500,25),"Flat-Footed = " + c.flatac());
+		GUI.Label(new Rect(100,240,500,25),"Touch AC = " + c.touchac());
 	}
 
 	int d20()
