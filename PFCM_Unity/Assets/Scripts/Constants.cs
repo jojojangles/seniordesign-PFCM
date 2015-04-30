@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,4 +31,7 @@ namespace PFCM
                                         ARCANIST, BLOODRAGER, BRAWLER, HUNTER, INVESTIGATOR, SHAMAN,
                                         SKALD, SLAYER, SWASHBUCKLER, WARPRIEST, NONE};
 	public enum RACES : byte { HUMAN = 0, DWARF, ELF, GNOME, HALF_ELF, HALF_ORC, HALFLING, CUSTOM};
+	public enum ARMOR : byte {CLOTHING = 0, LEATHER, BREASTPLATE, HALFPLATE, FULLPLATE};
+	public enum EQUIP : byte {ARMOR = 0, SHIELD, BELT, BODY, CHEST, EYES, FEET, HANDS, HEAD, HEADBAND,
+		NECK, LRING, RRING, SHOULDERS, WRIST};
 }

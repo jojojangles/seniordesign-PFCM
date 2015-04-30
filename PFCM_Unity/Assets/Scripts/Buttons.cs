@@ -100,7 +100,7 @@ public class Buttons : MonoBehaviour {
 		}
 		aselection = new GUIContent("ATB");
 
-		armory = Armor.armory();
+		armory = c.armory();
 		string[] armkeys = new string[armory.Keys.Count];
 		armory.Keys.CopyTo(armkeys,0);
 		armList = new GUIContent[armory.Count];
@@ -108,6 +108,7 @@ public class Buttons : MonoBehaviour {
 		{
 			armList[i] = new GUIContent(armkeys[i]);
 		}
+		armselection = new GUIContent("ARMOR");
 	}
 	
 	// Update is called once per frame
@@ -435,14 +436,15 @@ public class Buttons : MonoBehaviour {
 
 	void GUI_armor()
 	{
-		GUI.Label(new Rect(800,650,50,25), "Worn Equipment");
+		GUI.Label(new Rect(775,650,150,25), "Worn Equipment");
 		if (Popup.List(new Rect (725, 675, 200, 25),ref armshow,ref armentry,armselection,armList,listStyle))
 		{
 			armpicked = true;
-			armselection = armList[aentry];
-			string thing = armselection.text;
-			//c.absFave((ABILITY_SCORES)Enum.Parse(typeof(ABILITY_SCORES),thing));
+			armselection = armList[armentry];
+			string armname = armselection.text;
+			c.equip(EQUIP.ARMOR, c.armory()[armname]);
 		}
+
 	}
 
 	int d20()

@@ -11,7 +11,12 @@ public class Gear
 	protected bool _masterwork;
 
 	public Gear ()
-	{}
+	{
+		_name = "";
+		_price = 0;
+		_weight = 0;
+		_masterwork = false;
+	}
 
 	public Gear (string name, int price, int weight, bool masterwork)
 	{
@@ -33,7 +38,13 @@ public class Armor : Gear
 	private bool _speed;
 
 	public Armor()
-	{}
+	{
+		_ac = 0;
+		_dex = 10;
+		_checkpen = 0;
+		_spellfail = 0;
+		_speed = false;
+	}
 
 	public Armor (
 		string name,
@@ -73,6 +84,8 @@ public class Armor : Gear
 		a[fullplate.name ()] = fullplate;
 		return a;
 	}
+
+	public int ac() {return _ac;}
 }
 
 public class Weapon : Gear

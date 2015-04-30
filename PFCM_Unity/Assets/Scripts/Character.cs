@@ -16,11 +16,16 @@ public class Character {
 	private Dictionary<SKILLS,int> skill_BASE;
 	private Dictionary<BONUS_TYPES, Dictionary<ABILITY_SCORES,int>> ability_BONUS;
 	private Dictionary<BONUS_TYPES, Dictionary<SKILLS,int>> skill_BONUS;
+	private Dictionary<BONUS_TYPES, int> acBonus;
 	private ABILITY_SCORES hfave;
 
 	//char agnostic, rules
 	private Dictionary<CLASSES,int> hitdice;
 	private Dictionary<CLASSES,int[]> saves; //0 - bad, 1 - good
+
+	//stuff related stuff
+	private Dictionary<string,Armor> _armory;
+	private Dictionary<EQUIP,Gear> _equipment;
 
 	public Character()
 	{		
@@ -34,16 +39,14 @@ public class Character {
 		skill_BASE = new Dictionary<SKILLS, int>();
 		ability_BONUS = new Dictionary<BONUS_TYPES, Dictionary<ABILITY_SCORES, int>>();
 		skill_BONUS = new Dictionary<BONUS_TYPES, Dictionary<SKILLS, int>>();
+		acBonus = new Dictionary<BONUS_TYPES,int>();
 		hfave = ABILITY_SCORES.STR;
 
-		foreach(ABILITY_SCORES abs in ABILITY_SCORES.GetValues(typeof(ABILITY_SCORES)))
+		foreach(ABILITY_SCORES abs in ABILITY_SCORES.GetValues(typeof(ABILITY_SCORES))){ability_BASE[abs] = 10;}
+		foreach(SKILLS s in SKILLS.GetValues(typeof(SKILLS))){skill_BASE[s] = 0;}
+		foreach(BONUS_TYPES b in BONUS_TYPES.GetValues(typeof(BONUS_TYPES)))
 		{
-			ability_BASE.Add(abs,10);
-		}
-
-		foreach(SKILLS s in SKILLS.GetValues(typeof(SKILLS)))
-		{
-			skill_BASE.Add(s, 0);
+			acBonus[b] = 0;
 		}
 
 		hitdice = new Dictionary<CLASSES,int>();
@@ -81,6 +84,9 @@ public class Character {
 		hitdice[CLASSES.WITCH] = 6; saves[CLASSES.WITCH] = new int[]{0,0,1};
 		hitdice[CLASSES.WIZARD] = 6; saves[CLASSES.WIZARD] = new int[]{0,0,1};
 		hitdice[CLASSES.NONE] = 0; saves[CLASSES.NONE] = new int[]{0,0,0};
+
+		_armory = Armor.armory();
+		_equipment = new Dictionary<EQUIP, Gear>();
 	}
 
 	public void pname(string name) {playerName = name;}
@@ -180,6 +186,7 @@ public class Character {
 			d[ABILITY_SCORES.INT] = 0;
 			d[ABILITY_SCORES.WIS] = 2;
 			d[ABILITY_SCORES.CHA] = -2;
+			acBonus[BONUS_TYPES.SIZE] = 0;
 			break;
 		case RACES.ELF:
 			d = new Dictionary<ABILITY_SCORES,int>();
@@ -189,6 +196,7 @@ public class Character {
 			d[ABILITY_SCORES.INT] = 2;
 			d[ABILITY_SCORES.WIS] = 0;
 			d[ABILITY_SCORES.CHA] = 0;
+			acBonus[BONUS_TYPES.SIZE] = 0;
 			break;
 		case RACES.GNOME:
 			d = new Dictionary<ABILITY_SCORES,int>();
@@ -198,6 +206,7 @@ public class Character {
 			d[ABILITY_SCORES.INT] = 0;
 			d[ABILITY_SCORES.WIS] = 0;
 			d[ABILITY_SCORES.CHA] = 2;
+			acBonus[BONUS_TYPES.SIZE] = 1;
 			break;
 		case RACES.HALF_ELF:
 			d = new Dictionary<ABILITY_SCORES,int>();
@@ -208,6 +217,7 @@ public class Character {
 			d[ABILITY_SCORES.WIS] = 0;
 			d[ABILITY_SCORES.CHA] = 0;
 			d[hfave] = 2;
+			acBonus[BONUS_TYPES.SIZE] = 0;
 			break;
 		case RACES.HALF_ORC:
 			d = new Dictionary<ABILITY_SCORES,int>();
@@ -218,6 +228,7 @@ public class Character {
 			d[ABILITY_SCORES.WIS] = 0;
 			d[ABILITY_SCORES.CHA] = 0;
 			d[hfave] = 2;
+			acBonus[BONUS_TYPES.SIZE] = 0;
 			break;
 		case RACES.HALFLING:
 			d = new Dictionary<ABILITY_SCORES,int>();
@@ -227,6 +238,7 @@ public class Character {
 			d[ABILITY_SCORES.INT] = 0;
 			d[ABILITY_SCORES.WIS] = 0;
 			d[ABILITY_SCORES.CHA] = 2;
+			acBonus[BONUS_TYPES.SIZE] = 1;
 			break;
 		case RACES.HUMAN:
 			d = new Dictionary<ABILITY_SCORES,int>();
@@ -237,6 +249,7 @@ public class Character {
 			d[ABILITY_SCORES.WIS] = 0;
 			d[ABILITY_SCORES.CHA] = 0;
 			d[hfave] = 2;
+			acBonus[BONUS_TYPES.SIZE] = 0;
 			break;
 		default:
 			d = new Dictionary<ABILITY_SCORES,int>();
@@ -246,6 +259,7 @@ public class Character {
 			d[ABILITY_SCORES.INT] = 0;
 			d[ABILITY_SCORES.WIS] = 0;
 			d[ABILITY_SCORES.CHA] = 0;
+			acBonus[BONUS_TYPES.SIZE] = 0;
 			break;
 		}
 		return d;
@@ -309,5 +323,56 @@ public class Character {
 	public int totlev()
 	{
 		return levels[0] + levels[1] + levels[2];
+	}
+
+	public Dictionary<string,Armor> armory()
+	{
+		return _armory;
+	}
+
+	public Dictionary<EQUIP,Gear> equipment()
+	{
+		return _equipment;
+	}
+
+	public void equip(EQUIP slot, Gear g)
+	{
+		_equipment[slot] = g;
+	}
+
+	public Gear equip(EQUIP slot)
+	{
+		return _equipment[slot] != null ? _equipment[slot] : new Gear();
+	}
+
+	public int ac()
+	{
+		return 10 + 
+			absMod(ABILITY_SCORES.DEX) + 
+			acBonus[BONUS_TYPES.DODGE] + 
+			acBonus[BONUS_TYPES.DEFLECT] + 
+			acBonus[BONUS_TYPES.ARMOR] + 
+			acBonus[BONUS_TYPES.SHIELD] + 
+			acBonus[BONUS_TYPES.NATARM] + 
+			acBonus[BONUS_TYPES.SIZE];
+	}
+
+	public int flatac()
+	{
+		return 10 + 
+			acBonus[BONUS_TYPES.DEFLECT] + 
+			acBonus[BONUS_TYPES.ARMOR] + 
+			acBonus[BONUS_TYPES.SHIELD] + 
+			acBonus[BONUS_TYPES.NATARM] + 
+			acBonus[BONUS_TYPES.SIZE];
+	}
+
+	public int touchac()
+	{
+		return 10 + 
+			absMod(ABILITY_SCORES.DEX) + 
+			acBonus[BONUS_TYPES.DODGE] + 
+			acBonus[BONUS_TYPES.DEFLECT] +  
+			acBonus[BONUS_TYPES.SIZE];
 	}
 }
