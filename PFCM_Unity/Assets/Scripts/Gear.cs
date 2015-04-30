@@ -12,7 +12,7 @@ public class Gear
 
 	public Gear ()
 	{
-		_name = "";
+		_name = "None";
 		_price = 0;
 		_weight = 0;
 		_masterwork = false;

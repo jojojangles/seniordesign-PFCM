@@ -87,6 +87,7 @@ public class Character {
 
 		_armory = Armor.armory();
 		_equipment = new Dictionary<EQUIP, Gear>();
+		_equipment[EQUIP.ARMOR] = _armory["Clothes"];
 	}
 
 	public void pname(string name) {playerName = name;}
@@ -342,7 +343,11 @@ public class Character {
 
 	public Gear equip(EQUIP slot)
 	{
-		return _equipment[slot] != null ? _equipment[slot] : new Gear();
+		if(_equipment.ContainsKey(slot)) 
+		{
+			return _equipment[slot];
+		}
+		return new Gear();
 	}
 
 	public int ac()

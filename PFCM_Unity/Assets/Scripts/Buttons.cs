@@ -6,6 +6,7 @@ using PFCM;
 
 public class Buttons : MonoBehaviour {
 	Character c; 
+	Customize spawn;
 	Dictionary<ABILITY_SCORES,int> raceBonus;
 
 	//vars for classes-dropdown
@@ -16,7 +17,7 @@ public class Buttons : MonoBehaviour {
 	private GUIContent[] cselection;
 	private int[] clevels = {0, 0, 0};
 
-	//vars for races-dropdown
+	///vars for races-dropdown
 	private GUIContent[] raceList;
 	private bool rshow = false;
 	private bool rpicked = false;
@@ -62,6 +63,7 @@ public class Buttons : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		c = GameObject.FindGameObjectWithTag("stats").GetComponent<CharacterStatTracker>().curChar;
+		spawn = GameObject.FindGameObjectWithTag("spawn").GetComponent<Customize>() as Customize;
 		raceBonus = c.racialAbs();
 
 		listStyle = new GUIStyle(); listStyle.normal.textColor = Color.white;
@@ -182,6 +184,8 @@ public class Buttons : MonoBehaviour {
 			rpicked = true;
 			rselection = raceList[rentry];
 			c.charRace((RACES)Enum.Parse(typeof(RACES),rselection.text));
+			Armor a = c.equip(EQUIP.ARMOR) as Armor;
+			spawn.showAvatar(c.charRace(),a);
 		}
 		GUI.Label(new Rect(550,35,100,25), "Favored: ");
 		if (Popup.List(new Rect (610, 35, 40, 25),ref ashow,ref aentry,aselection,absList,listStyle))
@@ -436,13 +440,15 @@ public class Buttons : MonoBehaviour {
 
 	void GUI_armor()
 	{
-		GUI.Label(new Rect(775,650,150,25), "Worn Equipment");
-		if (Popup.List(new Rect (725, 675, 200, 25),ref armshow,ref armentry,armselection,armList,listStyle))
+		GUI.Label(new Rect(775,725,150,25), "Worn Equipment");
+		if (Popup.List(new Rect (725, 750, 200, 25),ref armshow,ref armentry,armselection,armList,listStyle))
 		{
 			armpicked = true;
 			armselection = armList[armentry];
 			string armname = armselection.text;
-			c.equip(EQUIP.ARMOR, c.armory()[armname]);
+			Armor a = c.armory()[armname];
+			c.equip(EQUIP.ARMOR, a);
+			spawn.showAvatar(c.charRace(),a);
 		}
 
 	}

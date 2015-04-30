@@ -1,0 +1,137 @@
+fileFormatVersion: 2
+guid: 1d8feb2b9bf141a4c8c9f6c913f71d6c
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: hmm55:mesh01
+    100004: hmm55:mesh02
+    100006: hmm55:mesh1
+    100008: hmm55:mesh2
+    100010: hmm55:mesh31
+    100012: hmm55:mesh4
+    100014: hmm55:mesh41
+    100016: hmm55:mesh5
+    100018: hmm55:mesh51
+    100020: hmm55:mesh6
+    100022: hmm55:mesh61
+    100024: hmm55:mesh62
+    100026: hmm55:mesh63
+    100028: hmm55:mesh7
+    100030: hmm55:mesh8
+    400000: //RootNode
+    400002: hmm55:mesh01
+    400004: hmm55:mesh02
+    400006: hmm55:mesh1
+    400008: hmm55:mesh2
+    400010: hmm55:mesh31
+    400012: hmm55:mesh4
+    400014: hmm55:mesh41
+    400016: hmm55:mesh5
+    400018: hmm55:mesh51
+    400020: hmm55:mesh6
+    400022: hmm55:mesh61
+    400024: hmm55:mesh62
+    400026: hmm55:mesh63
+    400028: hmm55:mesh7
+    400030: hmm55:mesh8
+    2300000: hmm55:mesh01
+    2300002: hmm55:mesh02
+    2300004: hmm55:mesh1
+    2300006: hmm55:mesh2
+    2300008: hmm55:mesh31
+    2300010: hmm55:mesh4
+    2300012: hmm55:mesh41
+    2300014: hmm55:mesh5
+    2300016: hmm55:mesh51
+    2300018: hmm55:mesh6
+    2300020: hmm55:mesh61
+    2300022: hmm55:mesh62
+    2300024: hmm55:mesh63
+    2300026: hmm55:mesh7
+    2300028: hmm55:mesh8
+    3300000: hmm55:mesh01
+    3300002: hmm55:mesh02
+    3300004: hmm55:mesh1
+    3300006: hmm55:mesh2
+    3300008: hmm55:mesh31
+    3300010: hmm55:mesh4
+    3300012: hmm55:mesh41
+    3300014: hmm55:mesh5
+    3300016: hmm55:mesh51
+    3300018: hmm55:mesh6
+    3300020: hmm55:mesh61
+    3300022: hmm55:mesh62
+    3300024: hmm55:mesh63
+    3300026: hmm55:mesh7
+    3300028: hmm55:mesh8
+    4300000: hmm55:mesh01
+    4300002: hmm55:mesh1
+    4300004: hmm55:mesh2
+    4300006: hmm55:mesh31
+    4300008: hmm55:mesh41
+    4300010: hmm55:mesh5
+    4300012: hmm55:mesh6
+    4300014: hmm55:mesh7
+    4300016: hmm55:mesh8
+    4300018: hmm55:mesh02
+    4300020: hmm55:mesh4
+    4300022: hmm55:mesh51
+    4300024: hmm55:mesh61
+    4300026: hmm55:mesh62
+    4300028: hmm55:mesh63
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

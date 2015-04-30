@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PFCM;
 
 public class Customize : MonoBehaviour {
 	private int _characterMeshIndex = 0;
@@ -13,62 +14,25 @@ public class Customize : MonoBehaviour {
 
 	private GameObject chestArmorMesh;
 
+	private GameObject _raceHead; // human = 0, elf, dwarf, orc, halfling
+	private GameObject[] _raceArmor; 
+	private GameObject _armor;// clothing = 0, leather, breast, half, full
+	private GameObject headMesh, armorMesh;
+
+
 	void Start()
 	{
 		cas = GameObject.Find("CharacterAssetManager").GetComponent<CharacterAssets>();
-		InstantiateCharacterMesh();
 		pc = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
-
-		InstantiateChestArmor();
+		_raceHead = cas.raceHeads[0];
+		_raceArmor = cas.humanArmor;
+		_armor = cas.humanArmor[0];
+		InstantiateModels();
 	}
 
-	/*
-	void OnGUI()
-	{
-		ChangeCharacterMesh();
-		ChangeChestArmorMesh();
-	}
-	*/
-
-	void InstantiateCharacterMesh()
-	{
-		switch(_characterMeshIndex)
-		{
-		case 1:
-			_characterModelName = "Orc";
-			break;
-		case 2:
-			_characterModelName = "Elf";
-			break;
-		default:
-			_characterMeshIndex = 0;
-			_characterModelName = "Human";
-			break;
-		}
-
-		if(transform.childCount > 0)
-		{
-			for(int i = 0; i < transform.childCount; i++)
-			{
-				Destroy(transform.GetChild(i).gameObject);
-			}
-		}
-
-		GameObject mesh = Instantiate(cas.characterMesh[_characterMeshIndex], transform.position, Quaternion.identity) as GameObject;
-		mesh.transform.parent = transform;
-		mesh.transform.rotation = transform.rotation;
-		InstantiateChestArmor();
-		pc = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
-	}
-
-	void InstantiateChestArmor()
+	void InstantiateModels()
 	{
 		pc = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
-
-		if(_chestArmorIndex > cas.chestArmorMesh.Length - 1)
-		{
-			_chestArmorIndex = 0;
-		}
 		if(pc.chestNode != null)
 		{
 			for(int i = 0; i < pc.chestNode.transform.childCount; i++)
@@ -76,45 +40,71 @@ public class Customize : MonoBehaviour {
 				GameObject thing = pc.chestNode.transform.GetChild(i).gameObject;
 				Destroy(thing);
 			}
-		}
-
-		switch(_chestArmorIndex)
+		}if(pc.headNode != null)
 		{
-		case 1:
-			_chestArmorName = "Cloth Chest";
-			break;
-		case 2:
-			_chestArmorName = "Leather Chest";
-			break;
-		case 3:
-			_chestArmorName = "Metal Chest";
-			break;
-		default:
-			_chestArmorIndex = 0;
-			_chestArmorName = "None";
-			break;
+			for(int i = 0; i < pc.headNode.transform.childCount; i++)
+			{
+				GameObject thing = pc.headNode.transform.GetChild(i).gameObject;
+				Destroy(thing);
+			}
 		}
-
-		chestArmorMesh = Instantiate(cas.chestArmorMesh[_chestArmorIndex], pc.chestNode.transform.position, Quaternion.identity) as GameObject;
-		chestArmorMesh.transform.parent = pc.chestNode.transform;
-		chestArmorMesh.transform.rotation = new Quaternion(0,0,0,0);
+		headMesh = Instantiate(_raceHead,pc.headNode.transform.position,Quaternion.identity) as GameObject;
+		headMesh.transform.parent = pc.headNode.transform;
+		headMesh.transform.rotation = new Quaternion(0,0,0,0);
+		
+		armorMesh = Instantiate(_armor,pc.armorNode.transform.position,Quaternion.identity) as GameObject;
+		armorMesh.transform.parent = pc.armorNode.transform;
+		armorMesh.transform.rotation = new Quaternion(0,0,0,0);
 	}
 
-	void ChangeCharacterMesh()
+	public void showAvatar(RACES r, Armor a)
 	{
-		if(GUI.Button(new Rect(Screen.width/2 - 60, Screen.height - 30, 120, 30), _characterModelName))
+		switch(r)// human = 0, elf, dwarf, orc, halfling
 		{
-			_characterMeshIndex++;
-			InstantiateCharacterMesh();
+		case(RACES.HUMAN):
+			_raceHead = cas.raceHeads[0];
+			_raceArmor = cas.humanArmor;
+			break;
+		case(RACES.ELF):
+		case(RACES.HALF_ELF):
+			_raceHead = cas.raceHeads[1];
+			_raceArmor = cas.elfArmor;
+			break;
+		case(RACES.DWARF):
+			_raceHead = cas.raceHeads[2];
+			_raceArmor = cas.dwarfArmor;
+			break;
+		case(RACES.HALF_ORC):
+			_raceHead = cas.raceHeads[3];
+			_raceArmor = cas.orcArmor;
+			break;
+		case(RACES.HALFLING):
+		case(RACES.GNOME):
+			_raceHead = cas.raceHeads[4];
+			_raceArmor = cas.halflingArmor;
+			break;
 		}
-	}
 
-	void ChangeChestArmorMesh()
-	{
-		if(GUI.Button(new Rect(0, 0, 120, 30), _chestArmorName))
+
+		switch(a.name())// clothing = 0, leather, breast, half, full
 		{
-			_chestArmorIndex++;
-			InstantiateChestArmor();
+		case("Clothes"):
+			_armor = _raceArmor[0];
+			break;
+		case("Leather"):
+			_armor = _raceArmor[1];
+			break;
+		case("Breastplate"):
+			_armor = _raceArmor[2];
+			break;
+		case("Half Plate"):
+			_armor = _raceArmor[3];
+			break;
+		case("Full Plate"):
+			_armor = _raceArmor[4];
+			break;
 		}
+
+		InstantiateModels();
 	}
 }
