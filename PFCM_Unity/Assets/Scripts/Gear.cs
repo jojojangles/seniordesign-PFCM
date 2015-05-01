@@ -102,4 +102,62 @@ public class Weapon : Gear
 	private int _numDie;
 	private int _minCrit;
 	private int _critMult;
+	private float _strMult;
+	private bool _ranged;
+
+	public Weapon()
+	{
+		_damDie = 6;
+		_numDie = 1;
+		_minCrit = 20;
+		_critMult = 2;
+		_strMult = 1.0f;
+		_ranged = false;
+	}
+
+	public Weapon (
+		string name,
+		int price,
+		int weight,
+		bool masterwork,
+		int numDie,
+		int damDie,
+		int minCrit,
+		int critMult,
+		float strMult,
+		bool ranged)
+	{
+		_name = name;
+		_price = price;
+		_weight = weight;
+		_masterwork = masterwork;
+		_damDie = damDie;
+		_numDie = numDie;
+		_minCrit = minCrit;
+		_critMult = critMult;
+		_strMult = strMult;
+		_ranged = ranged;
+	}
+
+	public static Dictionary<string,Weapon>rack()
+	{
+		Weapon fists = new Weapon("Fists",0,0,false,1,4,20,2,1.0f,false);
+		Weapon dagger = new Weapon("Dagger",2,1,false,1,4,19,2,1.0f,false);
+		Weapon mace = new Weapon("Mace",12,8,false,1,8,20,2,1.0f,false);
+		Weapon longsword = new Weapon("Longsword",15,4,false,1,8,19,2,1.0f,false);
+		Weapon greatsword = new Weapon("Greatsword",50,8,false,2,6,19,2,1.5f,false);
+		Weapon longbow = new Weapon("Longbow",75,3,false,1,8,20,3,1.0f,true);
+		Weapon crossbow = new Weapon("Crossbow",35,4,false,1,8,19,2,1.0f,true);
+		Dictionary<string,Weapon> w = new Dictionary<string, Weapon>();
+		w[fists.name ()] = fists;
+		w[dagger.name()] = dagger;
+		w[mace.name()] = mace;
+		w[longsword.name()] = longsword;
+		w[greatsword.name()] = greatsword;
+		w[longbow.name()] = longbow;
+		w[crossbow.name()] = crossbow;
+		return w;
+	}
+	public int damDie() {return _damDie;}
+	public int numDie() {return _numDie;}
 }

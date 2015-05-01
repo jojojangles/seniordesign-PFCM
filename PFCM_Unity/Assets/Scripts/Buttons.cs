@@ -37,7 +37,15 @@ public class Buttons : MonoBehaviour {
 	private bool armpicked = false;
 	private int armentry = 0;
 	private GUIContent armselection;
-	Dictionary<string,Armor> armory;
+
+	//vars for weapon dropdown
+	private GUIContent[] wepList;
+	private bool wepshow = false;
+	private bool weppicked = false;
+	private int wepentry = 0;
+	private GUIContent wepselection;
+	private int attackRoll = 0;
+	private int damageRoll = 0;
 
 	//styles for popups and fonts
 	private GUIStyle listStyle;
@@ -102,15 +110,24 @@ public class Buttons : MonoBehaviour {
 		}
 		aselection = new GUIContent("ATB");
 
-		armory = c.armory();
-		string[] armkeys = new string[armory.Keys.Count];
-		armory.Keys.CopyTo(armkeys,0);
-		armList = new GUIContent[armory.Count];
+		//armory = c.armory();
+		string[] armkeys = new string[c.armory().Keys.Count];
+		c.armory().Keys.CopyTo(armkeys,0);
+		armList = new GUIContent[c.armory().Count];
 		for(int i = 0; i < armList.Length; i++)
 		{
 			armList[i] = new GUIContent(armkeys[i]);
 		}
 		armselection = new GUIContent("ARMOR");
+
+		string[] wepkeys = new string[c.rack().Keys.Count];
+		c.rack().Keys.CopyTo(wepkeys,0);
+		wepList = new GUIContent[c.rack().Count];
+		for(int i = 0; i < wepList.Length; i++)
+		{
+			wepList[i] = new GUIContent(wepkeys[i]);
+		}
+		wepselection = new GUIContent("WEAPONS");
 	}
 	
 	// Update is called once per frame
@@ -150,6 +167,9 @@ public class Buttons : MonoBehaviour {
 
 		//armor
 		GUI_armor();
+
+		//weapons
+		GUI_weapon();
 	}
 
 	void GUI_saveLoad()
@@ -456,8 +476,42 @@ public class Buttons : MonoBehaviour {
 		GUI.Label(new Rect(100,240,500,25),"Touch AC = " + c.touchac());
 	}
 
-	int d20()
+	void GUI_weapon()
 	{
-		return (int)(UnityEngine.Random.Range(1.0f,21.0f));
+		GUI.Label(new Rect(50,625,100,25),"Weapons");
+		if (Popup.List(new Rect (5, 650, 100, 25),ref wepshow,ref wepentry,wepselection,wepList,listStyle))
+		{
+			weppicked = true;
+			wepselection = wepList[wepentry];
+			string wepname = wepselection.text;
+			Weapon w = c.rack()[wepname];
+			c.useWep(w);
+		}
+		if(GUI.Button(new Rect(125,650,55,25), "Attack: ")) 
+		{
+			attackRoll = d20() + c.absMod(ABILITY_SCORES.STR) + c.BAB();
+			damageRoll = 0;
+			for(int i = 0; i < c.handWep().numDie(); i++)
+			{
+				switch(c.handWep().damDie())
+				{
+				case 4: damageRoll += d4(); break;
+				case 6: damageRoll += d6(); break;
+				case 8: damageRoll += d8(); break;
+				case 10: damageRoll += d10(); break;
+				default: damageRoll += d4(); break;
+				}
+			}
+		}
+		string attDam = attackRoll + " Damage: " + damageRoll;
+		GUI.Label(new Rect(200,650,100,25), attDam);
+
+
 	}
+
+	int d4() {return (int)(UnityEngine.Random.Range(1.0f,5.0f));}
+	int d6() {return (int)(UnityEngine.Random.Range(1.0f,7.0f));}
+	int d8() {return (int)(UnityEngine.Random.Range(1.0f,9.0f));}
+	int d10() {return (int)(UnityEngine.Random.Range(1.0f,11.0f));}
+	int d20(){return (int)(UnityEngine.Random.Range(1.0f,21.0f));}
 }

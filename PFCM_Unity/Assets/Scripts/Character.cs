@@ -25,7 +25,11 @@ public class Character {
 
 	//stuff related stuff
 	private Dictionary<string,Armor> _armory;
+	private Dictionary<string,Weapon> _rack;
 	private Dictionary<EQUIP,Gear> _equipment;
+	private Weapon _inHand;
+
+	//feats, oh god no
 
 	public Character()
 	{		
@@ -88,6 +92,8 @@ public class Character {
 		_armory = Armor.armory();
 		_equipment = new Dictionary<EQUIP, Gear>();
 		_equipment[EQUIP.ARMOR] = _armory["Clothes"];
+		_rack = Weapon.rack();
+		_inHand = _rack["Fists"];
 	}
 
 	public void pname(string name) {playerName = name;}
@@ -380,5 +386,20 @@ public class Character {
 			acBonus[BONUS_TYPES.DODGE] + 
 			acBonus[BONUS_TYPES.DEFLECT] +  
 			acBonus[BONUS_TYPES.SIZE];
+	}
+
+	public Dictionary<string,Weapon> rack()
+	{
+		return _rack;
+	}
+
+	public Weapon handWep()
+	{
+		return _inHand;
+	}
+
+	public void useWep(Weapon w)
+	{
+		_inHand = w;
 	}
 }
