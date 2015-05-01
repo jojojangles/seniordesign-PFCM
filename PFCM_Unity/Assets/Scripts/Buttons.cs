@@ -68,6 +68,9 @@ public class Buttons : MonoBehaviour {
 	//random bonuses that i need in lots of places
 	private int sizeMod, armorAC = 0;
 
+	//feat bools!
+	private bool toughness, powerAttack, dodge;
+
 	// Use this for initialization
 	void Start () {
 		c = GameObject.FindGameObjectWithTag("stats").GetComponent<CharacterStatTracker>().curChar;
@@ -478,6 +481,7 @@ public class Buttons : MonoBehaviour {
 
 	void GUI_weapon()
 	{
+		powerAttack = GUI.Toggle(new Rect(5,675,100,25),powerAttack,"Power Attack");
 		GUI.Label(new Rect(50,625,100,25),"Weapons");
 		if (Popup.List(new Rect (5, 650, 100, 25),ref wepshow,ref wepentry,wepselection,wepList,listStyle))
 		{
@@ -490,6 +494,7 @@ public class Buttons : MonoBehaviour {
 		if(GUI.Button(new Rect(125,650,55,25), "Attack: ")) 
 		{
 			attackRoll = d20() + c.absMod(ABILITY_SCORES.STR) + c.BAB();
+			if(powerAttack) {attackRoll -= 1;}
 			damageRoll = 0;
 			for(int i = 0; i < c.handWep().numDie(); i++)
 			{
@@ -502,11 +507,14 @@ public class Buttons : MonoBehaviour {
 				default: damageRoll += d4(); break;
 				}
 			}
+			if(powerAttack) {damageRoll += 2;}
 		}
-		string attDam = attackRoll + " Damage: " + damageRoll;
-		GUI.Label(new Rect(200,650,100,25), attDam);
+		string attDam = attackRoll + "    Damage: " + damageRoll * (int)c.handWep().strMult();
+		GUI.Label(new Rect(185,650,100,25), attDam);
+	}
 
-
+	void GUI_feats()
+	{
 	}
 
 	int d4() {return (int)(UnityEngine.Random.Range(1.0f,5.0f));}

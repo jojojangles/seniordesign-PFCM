@@ -160,4 +160,5 @@ public class Weapon : Gear
 	}
 	public int damDie() {return _damDie;}
 	public int numDie() {return _numDie;}
+	public float strMult() {return _strMult;}
 }
